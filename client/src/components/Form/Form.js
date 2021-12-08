@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import FileBase from 'react-file-base64';
@@ -9,7 +9,7 @@ import { createPost, updatePost } from '../../action/posts';
 const Form = ({ currentId, setCurrentId }) => {
     currentId = currentId || 0;
     const [postData, setPostData] = useState({ 
-        creator: '', 
+        creator: 'ChungNA', 
         title: '', 
         message: '', 
         tags: '', 
@@ -18,6 +18,10 @@ const Form = ({ currentId, setCurrentId }) => {
     const post = useSelector((state) => (currentId ? state.posts.find((message) => message._id === currentId) : null));
     const dispatch = useDispatch();
     const classes = useStyles();
+
+    useEffect(() => {
+        if (post) setPostData(post);
+      }, [post]);
 
     const clear = () => {
         setCurrentId(0);
